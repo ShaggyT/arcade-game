@@ -54,9 +54,15 @@ class Player {
   constructor() {
     // The image/sprite for our player
     this.sprite = 'images/char-pink-girl.png';
-    // position of the player (x,y)
-    this.x = 0;
-    this.y = 0;
+    //distance between two blocks
+    this.horizontal = 101;
+    this.vertical = 83;
+    // start position of the player
+    this.x0 = (this.vertical * 2) + 30;
+    this.y0 = this.y = (this.vertical * 5) - 25;
+    // current position of the player (x,y)
+    this.x = this.x0;
+    this.y = this.y0 ;
   }
 
   update(dt) {
@@ -68,8 +74,31 @@ class Player {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
-  hanldeInput(key) {
-
+  // key -> direction ot the player's movement
+  // the position (0,0) is on tope-left corner -> up movement is this.y - this.vertical
+  handleInput(key) {
+    switch(key) {
+      case 'left':
+          if (this.x > 0) {
+            this.x -= this.horizontal;
+          }
+          break;
+      case 'up':
+          if (this.y > this.vertical) {
+            this.y -= this.vertical;
+          }
+          break;
+      case 'right':
+          if (this.x < (this.horizontal * 3)) {
+            this.x += this.horizontal;
+          }
+          break;
+      case 'down':
+          if (this.y < (this.vertical * 4)) {
+            this.y  += this.vertical;
+          }
+          break;
+    }
   }
 
   reset(position) {
@@ -96,6 +125,6 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    // player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(allowedKeys[e.keyCode]);
 
 });
