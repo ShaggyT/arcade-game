@@ -9,7 +9,7 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
+ * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
 
@@ -18,12 +18,16 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
+     //_a window property that returns a reference to the document contained within our window object - the global object is the "this" object window passed to the IFFE
     var doc = global.document,
+         //_a window property that points to itself (window object)
         win = global.window,
+        // _canvas element which holds our game content
         canvas = doc.createElement('canvas'),
+        //_ get the drawing surface for out game -  we want 2d context
         ctx = canvas.getContext('2d'),
         lastTime;
-
+    // _dimensions of our game
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
@@ -39,22 +43,26 @@ var Engine = (function(global) {
          * computer is) - hurray time!
          */
         var now = Date.now(),
+            //_gives us constant time between frames
             dt = (now - lastTime) / 1000.0;
 
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
         update(dt);
+        //_draw changes made after update
         render();
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
         lastTime = now;
+        // console.log(now)
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
+        //_ a window method that performs the drawing to the canvas of what we rendered earlier and takes the callback argument of main which is invoked before repainting the next frame
         win.requestAnimationFrame(main);
     }
 
@@ -65,6 +73,7 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
+        //_first call to main
         main();
     }
 
@@ -78,7 +87,8 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
+        // updateEntities(dt);
+
         // checkCollisions();
     }
 
@@ -117,8 +127,9 @@ var Engine = (function(global) {
             numRows = 6,
             numCols = 5,
             row, col;
-        
+
         // Before drawing, clear existing canvas
+        //_ x, y for the starting position
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
         /* Loop through the number of rows and columns we've defined above
@@ -138,7 +149,7 @@ var Engine = (function(global) {
             }
         }
 
-        renderEntities();
+        // renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
@@ -168,6 +179,7 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+     //_ load them into cache
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
@@ -175,11 +187,13 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png'
     ]);
+    //_ execute after the resource finishes loading the array of images
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developers can use it more easily
      * from within their app.js files.
      */
+     //_ add a property to the window object, which holds our 2d context for easy access in the global scope
     global.ctx = ctx;
 })(this);

@@ -5,8 +5,10 @@
  * to load the same image multiple times.
  */
 (function() {
+  //_ an object which will hold the contents of our cahce
     var resourceCache = {};
     var loading = [];
+    //_ an array which holds our callbacks from the onReady method executed at the end of the engine.js file
     var readyCallbacks = [];
 
     /* This is the publicly accessible image loading function. It accepts
@@ -46,6 +48,7 @@
              * within our cache; we'll need to load this image.
              */
             var img = new Image();
+            //_ an event handler that fires when the resources has finished loading
             img.onload = function() {
                 /* Once our image has properly loaded, add it to our cache
                  * so that we can simply return this image if the developer
@@ -65,6 +68,7 @@
              * the image's onload event handler is called. Finally, point
              * the image's src attribute to the passed in URL.
              */
+             //_ the onload function doesn't actually run untill after tll the items in the array key object gets assigned this false value 
             resourceCache[url] = false;
             img.src = url;
         }
