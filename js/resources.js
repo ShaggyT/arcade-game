@@ -43,6 +43,7 @@
              * re-loading the image.
              */
             return resourceCache[url];
+
         } else {
             /* This URL has not been previously loaded and is not present
              * within our cache; we'll need to load this image.
@@ -68,7 +69,7 @@
              * the image's onload event handler is called. Finally, point
              * the image's src attribute to the passed in URL.
              */
-             //_ the onload function doesn't actually run untill after tll the items in the array key object gets assigned this false value 
+             //_ the onload function doesn't actually run untill after tll the items in the array key object gets assigned this false value
             resourceCache[url] = false;
             img.src = url;
         }

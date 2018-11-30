@@ -27,6 +27,7 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 // _renders the result of the previous method and uses HTML Canvas method to draw the enemy's sprite new position to the game board
 Enemy.prototype.render = function() {
+    //_Resources.get -> returns the cached image of our stri[e ]
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -47,11 +48,41 @@ Enemy.prototype.render = function() {
     // 2.3. handleInput (direction ot the player's movement)
     // 2.4. reset the game (collion and win)
 
+// Player Class
+class Player {
+  // to initialize a new object
+  constructor() {
+    // The image/sprite for our player
+    this.sprite = 'images/char-pink-girl.png';
+    // position of the player (x,y)
+    this.x = 0;
+    this.y = 0;
+  }
+
+  update(dt) {
+
+  }
+
+  // Draw the player on the screen
+  render() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+
+  hanldeInput(key) {
+
+  }
+
+  reset(position) {
+
+  }
+
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 
+// Place the player object in a variable called player
+  const player = new Player();
 
 
 // This listens for key presses and sends the keys to your
