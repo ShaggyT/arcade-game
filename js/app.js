@@ -2,12 +2,12 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
-    // enemies position(x,y)
-
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+
+    // properties
+      // enemies position(x,y)
 };
 
 // Update the enemy's position, required method for game
@@ -18,7 +18,8 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
     // _handles enemy movement- use dt(time delta) to normalize gamse speed
-    // check enemies position status
+    // methods
+      // check enemies position status
         // if (within the grid) -> move forward by x = v(dt)
         // else (reset to start position)
 };
@@ -34,14 +35,17 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 // Player Class
-  // Constructore Function with some properties
-    // position of the player (x,y)
-    // player image
-  // Add methods to prototype
-    // update the player position(reached top of the grid, stays within the gird) and collision status
-    // render the player
-    // handleInput (direction ot the player's movement)
-    // reset the game (collion and win)
+  // 1. Constructore Function
+    // 1.1 properties
+      // 1.1.1. position of the player (x,y)
+      // 1.1.2. player image
+  // 2. Add methods to prototype
+    // 2.1.update the player position
+        // 2.1.1.reached top of the grid, stays within the gird
+        // 2.1.2.collision status
+    // 2.2. render the player
+    // 2.3. handleInput (direction ot the player's movement)
+    // 2.4. reset the game (collion and win)
 
 
 // Now instantiate your objects.
