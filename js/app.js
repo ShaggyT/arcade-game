@@ -1,52 +1,54 @@
 // Enemies our player must avoid
-var Enemy = function() {
+// arguments to give enemies  different position
+class Enemy {
+  constructor(x,y,speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-    // properties
-      // enemies position(x,y)
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+    // enemies start position
+    this.x = x;
+    // move toward the center of the row
+    this.y = y + 60;
+    // distance between blocks
+    this.horizontal = 101;
+    // end point limit to reset the enemy position - when enemy reaches the endpoint, it will reset the enemy position
+    this.endPoint = this.horizontal * 5;
+    // the enemy reset position will start off screen
+    this.startPosition = -this.horizontal;
+    this.speed = speed;
+  }
+  // Update the enemy's position, required method for game
+  // Parameter: dt, a time delta between ticks
+  update(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
     // _handles enemy movement- use dt(time delta) to normalize gamse speed
-    // methods
-      // check enemies position status
-        // if (within the grid) -> move forward by x = v(dt)
-        // else (reset to start position)
-};
 
-// Draw the enemy on the screen, required method for game
-// _renders the result of the previous method and uses HTML Canvas method to draw the enemy's sprite new position to the game board
-Enemy.prototype.render = function() {
+    // check enemies position status
+      // within the grid -> move forward by x = v(dt)
+      // stopping position of the enemy -> off screen
+      if (this.x < this.endPoint) {
+        this.x += this.speed * dt
+      } else {
+        //reset to start position when enemy is offscreen
+        this.x = this.startPosition;
+      }
+  }
+  // Draw the enemy on the screen, required method for game
+  // _renders the result of the previous method and uses HTML Canvas method to draw the enemy's sprite new position to the game board
+  render() {
     //_Resources.get -> returns the cached image of our stri[e ]
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+  }
+}
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
-// Player Class
-  // 1. Constructore Function
-    // 1.1 properties
-      // 1.1.1. position of the player (x,y)
-      // 1.1.2. player image
-  // 2. Add methods to prototype
-    // 2.1.update the player position
-        // 2.1.1.reached top of the grid, stays within the gird
-        // 2.1.2.collision status
-    // 2.2. render the player
-    // 2.3. handleInput (direction ot the player's movement)
-    // 2.4. reset the game (collion and win)
 
 // Player Class
 class Player {
@@ -65,10 +67,6 @@ class Player {
     this.y = this.y0 ;
   }
 
-  update(dt) {
-
-  }
-
   // Draw the player on the screen
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -77,6 +75,7 @@ class Player {
   // key -> direction ot the player's movement
   // the position (0,0) is on tope-left corner -> up movement is this.y - this.vertical
   handleInput(key) {
+    // update the player position: reached top of the grid, stays within the gird, collision status
     switch(key) {
       case 'left':
           if (this.x > 0) {
@@ -101,6 +100,7 @@ class Player {
     }
   }
 
+  // reset the game (collion and win)
   reset(position) {
 
   }
@@ -108,10 +108,18 @@ class Player {
 }
 
 // Now instantiate your objects.
+
 // Place all enemy objects in an array called allEnemies
+const enemy1 = new Enemy(-101,0, 200);
+const enemy2 = new Enemy(-101*5,0, 210);
+const enemy3 = new Enemy(-101,83, 300);
+const enemy4 = new Enemy(-101*3, 83, 300);
+const enemy5 = new Enemy(-101*2, 83*2, 200);
+const allEnemies = [];
+allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5);
 
 // Place the player object in a variable called player
-  const player = new Player();
+const player = new Player();
 
 
 // This listens for key presses and sends the keys to your
