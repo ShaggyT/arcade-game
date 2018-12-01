@@ -29,12 +29,12 @@ class Enemy {
     // _handles enemy movement- use dt(time delta) to normalize gamse speed
 
     // check enemies position status
-      // if (within the grid) -> move forward by x = v(dt)
+      // within the grid -> move forward by x = v(dt)
       // stopping position of the enemy -> off screen
       if (this.x < this.endPoint) {
         this.x += this.speed * dt
       } else {
-        // else (reset to start position when enemy is offscreen)
+        //reset to start position when enemy is offscreen
         this.x = this.startPosition;
       }
   }
