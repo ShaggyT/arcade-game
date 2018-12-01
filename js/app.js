@@ -11,7 +11,7 @@ class Enemy {
     // enemies start position
     this.x = x;
     // move toward the center of the row
-    this.y = y + 60;
+    this.y = y + 55;
     // distance between blocks
     this.horizontal = 101;
     // end point limit to reset the enemy position - when enemy reaches the endpoint, it will reset the enemy position
@@ -31,12 +31,12 @@ class Enemy {
     // check enemies position status
       // within the grid -> move forward by x = v(dt)
       // stopping position of the enemy -> off screen
-      if (this.x < this.endPoint) {
-        this.x += this.speed * dt
-      } else {
-        //reset to start position when enemy is offscreen
-        this.x = this.startPosition;
-      }
+    if (this.x < this.endPoint) {
+      this.x += this.speed * dt
+    } else {
+      //reset to start startPosition when enemy is offscreen
+      this.x = this.startPosition;
+    }
   }
   // Draw the enemy on the screen, required method for game
   // _renders the result of the previous method and uses HTML Canvas method to draw the enemy's sprite new position to the game board
@@ -60,8 +60,9 @@ class Player {
     this.horizontal = 101;
     this.vertical = 83;
     // start position of the player
+
     this.x0 = (this.vertical * 2) + 30;
-    this.y0 = this.y = (this.vertical * 5) - 25;
+    this.y0 = (this.vertical * 4) + 55;
     // current position of the player (x,y)
     this.x = this.x0;
     this.y = this.y0 ;
@@ -102,7 +103,30 @@ class Player {
 
   // reset the game (collion and win)
   reset(position) {
+    this.x = this.x0;
+    this.y = this.y0;
+  }
 
+  update() {
+    // (this.x, this.y)
+
+    for (let enemy of allEnemies) {
+      // win
+      if (this.y === 55) {
+        console.log("what is the y", this.y);
+
+        // alert('win')
+        this.reset();
+
+      }
+      // collision
+      if (this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
+        console.log(this.y, enemy.y)
+        alert('noooooo');
+        this.reset();
+      }
+
+    }
   }
 
 }
@@ -111,12 +135,11 @@ class Player {
 
 // Place all enemy objects in an array called allEnemies
 const enemy1 = new Enemy(-101,0, 200);
-const enemy2 = new Enemy(-101*5,0, 210);
-const enemy3 = new Enemy(-101,83, 300);
-const enemy4 = new Enemy(-101*3, 83, 300);
-const enemy5 = new Enemy(-101*2, 83*2, 200);
+const enemy2 = new Enemy(-101,83, 300);
+const enemy3 = new Enemy(-101*3, 83, 300);
+const enemy4 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5);
+allEnemies.push(enemy1, enemy2, enemy3, enemy4);
 
 // Place the player object in a variable called player
 const player = new Player();
