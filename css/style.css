@@ -1,3 +1,59 @@
 body {
-    text-align: center;
+  text-align: center;
+}
+
+.modal__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  border-radius: 4px;
+}
+
+.modal__body {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  font-family: "Nunito";
+  background-color: rgba(250,250,250, 0.7);
+  transform: translate(-50%, -150%);
+}
+
+.modal__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem;
+  font-size: 24px;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal__close {
+  color: rgb(149, 109, 150);
+  font-size: 18px;
+  font-weight: bold;
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.modal__button {
+  width: 100px;
+  height: 50px;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.05);
+  background-color: rgb(149, 109, 150);
+  color: white;
+  font-size: 15px;
+  border: none;
+  letter-spacing: 1px;
+}
+
+.hide {
+  display: none;
 }
