@@ -61,11 +61,12 @@ class Player {
     this.vertical = 83;
     // start position of the player
 
-    this.x0 = (this.vertical * 2) + 30;
+    this.x0 = this.horizontal * 2;
     this.y0 = (this.vertical * 4) + 55;
     // current position of the player (x,y)
     this.x = this.x0;
-    this.y = this.y0 ;
+    this.y = this.y0;
+    this.winner = false;
   }
 
   // Draw the player on the screen
@@ -89,12 +90,12 @@ class Player {
           }
           break;
       case 'right':
-          if (this.x < (this.horizontal * 3)) {
+          if (this.x < (this.horizontal * 4)) {
             this.x += this.horizontal;
           }
           break;
       case 'down':
-          if (this.y < (this.vertical * 4)) {
+          if (this.y < this.vertical * 4) {
             this.y  += this.vertical;
           }
           break;
@@ -108,23 +109,21 @@ class Player {
   }
 
   update() {
-    // (this.x, this.y)
-
     for (let enemy of allEnemies) {
-      // win
-      if (this.y === 55) {
-        console.log("what is the y", this.y);
 
-        // alert('win')
-        this.reset();
-
-      }
       // collision
-      if (this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
-        console.log(this.y, enemy.y)
-        alert('noooooo');
+      if(this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
         this.reset();
       }
+
+      // win
+      if(this.y === 55) {
+        this.winner = true;
+        setTimeout(function(){
+          this.reset;
+        }, 3000);
+      }
+
 
     }
   }
@@ -135,11 +134,11 @@ class Player {
 
 // Place all enemy objects in an array called allEnemies
 const enemy1 = new Enemy(-101,0, 200);
-const enemy2 = new Enemy(-101,83, 300);
-const enemy3 = new Enemy(-101*3, 83, 300);
+// const enemy2 = new Enemy(-101,83, 300);
+// const enemy3 = new Enemy(-101*3, 83, 300);
 const enemy4 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3, enemy4);
+allEnemies.push( enemy1,  enemy4);
 
 // Place the player object in a variable called player
 const player = new Player();

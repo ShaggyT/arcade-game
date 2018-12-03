@@ -26,12 +26,33 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         //_ get the drawing surface for out game -  we want 2d context
         ctx = canvas.getContext('2d'),
-        lastTime;
+        lastTime,
+        // we need the returned id from requestAnimationFrame to passinto to cancelAnimationMethod to stop the game
+        id;
     // _dimensions of our game
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+    const modal = document.querySelector('.modal__background');
+    const replay = document.querySelector('.modal__replay');
+    replay.addEventListener('click', function() {
+      modal.classList.toggle('hide');
+      player.reset();
+      player.winner = false;
+      win.requestAnimationFrame(main);
+    });
+    function toggleModal() {
+      const modal = document.querySelector('.modal__background');
+      modal.classList.toggle('hide');
+    }
+    const cancel = document.querySelector('.modal__close');
+    cancel.addEventListener('click', function() {
+      toggleModal();
+      player.reset();
+      player.winner = false;
+      win.requestAnimationFrame(main);
+    });
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -63,7 +84,13 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         //_ a window method that performs the drawing to the canvas of what we rendered earlier and takes the callback argument of main which is invoked before repainting the next frame
-        win.requestAnimationFrame(main);
+        if(player.winner === true){
+          win.cancelAnimationFrame(id);
+          modal.classList.toggle('hide');
+        } else {
+          id = win.requestAnimationFrame(main);
+        }
+
     }
 
     /* This function does some initial setup that should only occur once,
