@@ -34,7 +34,7 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
     canvas.classList.add('canvas');
-    
+
     const modal = document.querySelector('.modal__background');
     const replay = document.querySelector('.modal__replay');
     replay.addEventListener('click', function() {
@@ -178,6 +178,7 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+
     }
 
     /* This function is called by the render function and is called on each game

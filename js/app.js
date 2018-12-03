@@ -157,7 +157,12 @@ const enemy1 = new Enemy(-101,0, 200);
 // const enemy3 = new Enemy(-101*3, 83, 300);
 const enemy4 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
-allEnemies.push( enemy1,  enemy4);
+
+
+const startBtn = document.getElementById('start-btn');
+startBtn.addEventListener('click', function() {
+  allEnemies.push( enemy1,  enemy4);
+})
 
 // Place the player object in a variable called playsmwsmwsmwsmwer
 const player = new Player();

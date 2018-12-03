@@ -181,3 +181,27 @@ img {
   transform: scale3d(1, 1, 1);
   }
   }
+
+  /* Start Button */
+
+  #start-btn {
+    float: right;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    border-radius: 4px;
+    font-family: "Nunito";
+    margin-right: 100px;
+    margin-top: 10px;
+    letter-spacing: 0.2em;
+    text-transform:uppercase;
+    font-weight: bold;
+    padding: 10px;
+  }
+
+  #start-btn:hover {
+    background-color: rgb(149, 109, 150);
+    border: none;
+    color: white;
+  }
