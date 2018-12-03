@@ -1,3 +1,6 @@
+//  Globals
+var audio = new Audio;
+
 // Enemies our player must avoid
 // arguments to give enemies  different position
 class Enemy {
@@ -78,25 +81,30 @@ class Player {
   // the position (0,0) is on tope-left corner -> up movement is this.y - this.vertical
   handleInput(key) {
     // update the player position: reached top of the grid, stays within the gird, collision status
+    audio.src = 'sounds/step.wav';
     switch(key) {
       case 'left':
           if (this.x > 0) {
             this.x -= this.horizontal;
+            audio.play();
           }
           break;
       case 'up':
           if (this.y > this.vertical) {
             this.y -= this.vertical;
+            audio.play();
           }
           break;
       case 'right':
           if (this.x < (this.horizontal * 4)) {
             this.x += this.horizontal;
+            audio.play();
           }
           break;
       case 'down':
           if (this.y < this.vertical * 4) {
             this.y  += this.vertical;
+            audio.play();
           }
           break;
     }
@@ -109,13 +117,21 @@ class Player {
   }
 
   update() {
+
     for (let enemy of allEnemies) {
       // collision
+
+
       if(this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
+        audio.src = 'sounds/game_over.wav';
+        audio.play();
+        console.log("audio", audio.src);
         this.reset();
       }
       // win
       if(this.y === 55) {
+        audio.src = 'sounds/win.wav';
+        audio.play();
         this.winner = true;
         setTimeout(function(){
           this.reset;
@@ -143,7 +159,7 @@ const enemy4 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
 allEnemies.push( enemy1,  enemy4);
 
-// Place the player object in a variable called player
+// Place the player object in a variable called playsmwsmwsmwsmwer
 const player = new Player();
 
 
