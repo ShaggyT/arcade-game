@@ -1,7 +1,29 @@
 body {
   text-align: center;
+  opacity: 1;
+  background: #feada6;
+  background: linear-gradient(to left, #feada6, #f5efef);
+  overflow: hidden;
+  font-family: "Nunito";
 }
 
+img {
+  width: 60px;
+  margin: 0;
+  display: block;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.canvas {
+  margin-top: 20px;
+  margin-right: 200px;
+}
+
+#avatars {
+  float: left;
+  margin-left: 20px;
+}
 .modal__background {
   position: absolute;
   top: 0;
@@ -43,13 +65,13 @@ body {
 }
 
 .modal__button {
-  width: 100px;
-  height: 50px;
+  width: 80px;
+  height: 40px;
   border-radius: 4px;
   box-shadow: 0 4px 14px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.05);
   background-color: rgb(149, 109, 150);
   color: white;
-  font-size: 15px;
+  font-size: 12px;
   border: none;
   letter-spacing: 1px;
 }
@@ -57,3 +79,104 @@ body {
 .hide {
   display: none;
 }
+
+.char-princess-girl {
+  background: linear-gradient(to left, #a1c4fd, #c2e9fb);
+}
+
+.char-cat-girl {
+  background: linear-gradient(to left, #ff9a9e, #fecfef);
+}
+
+.char-horn-girl {
+  background: linear-gradient(to left, #93a5cf, #e4efe9);
+}
+
+.char-pink-girl {
+  background: linear-gradient(to left, #feada6, #f5efef);
+}
+
+.char-boy {
+  background: linear-gradient(to left,#ffecd2, #fcb69f);
+}
+
+/* Animation */
+
+/* Flipping Card (flipInY): http://www.theappguruz.com/tag-tools/web/CSSAnimations/  */
+
+.bounceIn {
+  -webkit-animation-name: bounceIn;
+  animation-name: bounceIn;
+  -webkit-animation-duration: .25s;
+  animation-duration: .25s;
+  -webkit-animation-duration: 0.25s;
+  animation-duration: 0.25s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }
+  @-webkit-keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+  -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+  opacity: 0;
+  -webkit-transform: scale3d(.3, .3, .3);
+  transform: scale3d(.3, .3, .3);
+  }
+  20% {
+  -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+  -webkit-transform: scale3d(.9, .9, .9);
+  transform: scale3d(.9, .9, .9);
+  }
+  60% {
+  opacity: 1;
+  -webkit-transform: scale3d(1.03, 1.03, 1.03);
+  transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+  -webkit-transform: scale3d(.97, .97, .97);
+  transform: scale3d(.97, .97, .97);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  }
+  @keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+  -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+  opacity: 0;
+  -webkit-transform: scale3d(.3, .3, .3);
+  transform: scale3d(.3, .3, .3);
+  }
+  20% {
+  -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+  -webkit-transform: scale3d(.9, .9, .9);
+  transform: scale3d(.9, .9, .9);
+  }
+  60% {
+  opacity: 1;
+  -webkit-transform: scale3d(1.03, 1.03, 1.03);
+  transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+  -webkit-transform: scale3d(.97, .97, .97);
+  transform: scale3d(.97, .97, .97);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  }

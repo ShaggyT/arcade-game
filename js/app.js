@@ -110,12 +110,10 @@ class Player {
 
   update() {
     for (let enemy of allEnemies) {
-
       // collision
       if(this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
         this.reset();
       }
-
       // win
       if(this.y === 55) {
         this.winner = true;
@@ -123,9 +121,14 @@ class Player {
           this.reset;
         }, 3000);
       }
-
-
     }
+  }
+
+  handleClick(e) {
+    // set the avatar
+    this.sprite = `images/${e.target.id}.png`;
+    // chage the background color based on the selected avatar
+    document.body.className = e.target.id;
   }
 
 }
@@ -158,3 +161,22 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 
 });
+
+
+const avatars = document.getElementById('avatars');
+avatars.addEventListener('click', function(e) {
+  player.handleClick(e);
+});
+
+const avatar = document.querySelectorAll('.avatar');
+for (let i = 0; i< avatar.length; i++) {
+  avatar[i].addEventListener('mouseover', function(e) {
+    avatar[i].classList.add('bounceIn')
+  });
+}
+
+for (let i = 0; i< avatar.length; i++) {
+  avatar[i].addEventListener('mouseout', function(e) {
+    avatar[i].classList.remove('bounceIn')
+  });
+}
