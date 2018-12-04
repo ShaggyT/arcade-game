@@ -6,13 +6,15 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body scroll="no">
+  <!--  win modal -->
   <div class="modal__background hide">
     <div class="modal__body">
-      <span class="modal__close">x</span>
+      <span class="modal__close close">x</span>
       <h1 class="modal__title">Yohooooo</h1>
       <button class="modal__button modal__replay">Replay</button>
     </div>
   </div>
+  <!-- select players -->
   <div id="avatars">
     <h3 id="tooltip">Pick the Player</h3>
     <img id="char-princess-girl" class="avatar" src="images/char-princess-girl.png" draggable="true" />
@@ -21,7 +23,21 @@
     <img id="char-pink-girl" class="avatar" src="images/char-pink-girl.png" draggable="true" />
     <img id="char-boy" class="avatar" src="images/char-boy.png" draggable="true" />
   </div>
+  <!-- start bnutton -->
   <button id="start-btn">Start</button>
+  <!-- welcome modal -->
+  <div id="welcome-modal" class="modal">
+		<div>
+		  <a href="#close" class="close">X</a>
+		  <h2 class="title">welcome to frogger!</h2>
+      <ul>
+        <li>Click on the avatar to pick the player.</li>
+        <li>Click on start.</li>
+        <li>To move the player, use your keyboards' up, right, down and left arrow keys.</li>
+        <li>In order to win, you need to reach the water without having any collision with the bugs.</li>
+      </ul>
+	  </div>
+	</div>
   <script src="js/resources.js"></script>
   <script src="js/app.js"></script>
   <script src="js/engine.js"></script>
