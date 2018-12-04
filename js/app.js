@@ -1,10 +1,25 @@
 //  Globals
-var audio = new Audio;
+let audio = new Audio,
+    lives = 6,
+    livesContainer;
 
 // Upon page load open the welcome modal
 window.onload = function() {
   window.location.href = "#welcome-modal";
 }
+
+
+let addLives = () => {
+  for (let i = 0; i < lives ; i++) {
+    let life = document.createElement('li');
+    livesContainer = document.getElementById('lives');
+    livesContainer.appendChild(life);
+    life.innerHTML = '<img src="images/Heart.png" />';
+    life.classList.add('heart');
+  }
+};
+
+addLives();
 
 // Enemies our player must avoid
 // arguments to give enemies  different position
@@ -126,11 +141,12 @@ class Player {
     for (let enemy of allEnemies) {
       // collision
 
-
       if(this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
-        audio.src = 'sounds/game_over.wav';
+        lives = lives - 1;
+        this.lose();
+
+        audio.src = 'sounds/lost_a_life.wav';
         audio.play();
-        console.log("audio", audio.src);
         this.reset();
       }
       // win
@@ -146,13 +162,20 @@ class Player {
   }
 
   handleClick(e) {
-    console.log("why cant i hear it", audio.src);
     audio.src = 'sounds/click.wav';
     audio.play();
     // set the avatar
     this.sprite = `images/${e.target.id}.png`;
     // chage the background color based on the selected avatar
     document.body.className = e.target.id;
+  }
+
+  lose() {
+    if (lives > 0) {
+      livesContainer.removeChild(livesContainer.childNodes[lives]);
+    } else {
+      livesContainer.innerHTML = ' ';
+    }
   }
 
 }
@@ -166,7 +189,7 @@ const enemy1 = new Enemy(-101,0, 200);
 const enemy4 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
 
-
+// enemies will strt moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
   allEnemies.push( enemy1,  enemy4);
@@ -191,25 +214,24 @@ document.addEventListener('keyup', function(e) {
 
 });
 
-
+// select player
 const avatars = document.getElementById('avatars');
 avatars.addEventListener('click', function(e) {
   player.handleClick(e);
 });
-
+// add animation when hovering on an avatar
 const avatar = document.querySelectorAll('.avatar');
 for (let i = 0; i< avatar.length; i++) {
   avatar[i].addEventListener('mouseover', function(e) {
     avatar[i].classList.add('bounceIn')
   });
 }
-
+// remove aniamtion when leaving an avatar
 for (let i = 0; i< avatar.length; i++) {
   avatar[i].addEventListener('mouseout', function(e) {
     avatar[i].classList.remove('bounceIn')
   });
 }
-
 
 //  close welcome modal
 const startGame = document.querySelector('.start');

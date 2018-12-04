@@ -34,9 +34,9 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
     canvas.classList.add('canvas');
-
-    const modal = document.querySelector('.modal__background');
-    const replay = document.querySelector('.modal__replay');
+    // win modal
+    const modal = document.querySelector('.win-modal-background');
+    const replay = document.querySelector('.win-modal-replay');
     replay.addEventListener('click', function() {
       modal.classList.toggle('hide');
       player.reset();
@@ -44,16 +44,48 @@ var Engine = (function(global) {
       win.requestAnimationFrame(main);
     });
     function toggleModal() {
-      const modal = document.querySelector('.modal__background');
+      const modal = document.querySelector('.win-modal-background');
       modal.classList.toggle('hide');
     }
-    const cancel = document.querySelector('.modal__close');
+    const cancel = document.querySelector('.win-modal-close');
     cancel.addEventListener('click', function() {
       toggleModal();
       player.reset();
       player.winner = false;
       win.requestAnimationFrame(main);
     });
+
+    // gameover modal
+    const gameOverModal = document.querySelector('.lose-modal-background');
+    const gameOver = document.querySelector('.lose-modal-replay');
+    // reset after clicking the replay button in game over modal
+    gameOver.addEventListener('click', function() {
+      audio.src = 'sounds/game_over.wav';
+      audio.play();
+      toggleModalClose();
+      player.reset();
+      player.winner = false;
+      win.requestAnimationFrame(main);
+      lives = 6;
+      addLives();
+
+    });
+    function toggleModalClose() {
+      const gameOverModal = document.querySelector('.lose-modal-background');
+      gameOverModal.classList.toggle('hide');
+    }
+    // reset after closing the game over modal
+    const cancelLose = document.querySelector('.lose-modal-close');
+    cancelLose.addEventListener('click', function() {
+      toggleModalClose();
+      player.reset();
+      player.winner = false;
+      win.requestAnimationFrame(main);
+      lives = 6;
+      addLives();
+
+    });
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -79,7 +111,6 @@ var Engine = (function(global) {
          * for the next time this function is called.
          */
         lastTime = now;
-        // console.log(now)
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
@@ -88,6 +119,8 @@ var Engine = (function(global) {
         if(player.winner === true){
           win.cancelAnimationFrame(id);
           modal.classList.toggle('hide');
+        } else if(lives === 0) {
+          gameOverModal.classList.toggle('hide');
         } else {
           id = win.requestAnimationFrame(main);
         }
@@ -128,7 +161,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
+        allEnemies && allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
         player.update();
@@ -150,7 +183,7 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/grass-block.png'   // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -219,6 +252,7 @@ var Engine = (function(global) {
         'images/char-cat-girl.png',
         'images/char-horn-girl.png',
         'images/char-princess-girl.png',
+        'images/Heart.png',
     ]);
     //_ execute after the resource finishes loading the array of images
     Resources.onReady(init);

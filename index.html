@@ -6,14 +6,30 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body scroll="no">
+  <!-- hearts -->
+  <div>
+    <ul id="lives" class="hearts">
+    </ul>
+  </div>
+
   <!--  win modal -->
-  <div class="modal__background hide">
-    <div class="modal__body">
-      <span class="modal__close close">x</span>
-      <h1 class="modal__title">Yohooooo</h1>
-      <button class="modal__button modal__replay">Replay</button>
+  <div class="win-modal-background hide">
+    <div class="win-modal-body">
+      <span class="win-modal-close close">x</span>
+      <h1 class="win-modal-title">Yohooooo</h1>
+      <button class="modal-button win-modal-replay">Replay</button>
     </div>
   </div>
+
+  <!--  game over modal -->
+  <div class="lose-modal-background hide">
+    <div class="lose-modal-body">
+      <span class="lose-modal-close close">x</span>
+      <h1 class="lose-modal-title">Game Over!</h1>
+      <button class="modal-button lose-modal-replay">Replay</button>
+    </div>
+  </div>
+
   <!-- select players -->
   <div id="avatars">
     <h3 id="tooltip">Pick the Player</h3>

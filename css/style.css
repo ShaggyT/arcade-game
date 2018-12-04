@@ -128,8 +128,8 @@ img {
   }
   }
 
-  /* win modal */
-  .modal__background {
+  /* win modal and gameover modal*/
+  .win-modal-background, .lose-modal-background {
     position: absolute;
     top: 0;
     left: 0;
@@ -139,7 +139,7 @@ img {
     border-radius: 4px;
   }
 
-  .modal__body {
+  .win-modal-body, .lose-modal-body {
     position: relative;
     width: 400px;
     height: 200px;
@@ -151,7 +151,7 @@ img {
     border-radius: 10px;
   }
 
-  .modal__title {
+  .win-modal-title, .lose-modal-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,7 +162,7 @@ img {
     text-transform:uppercase;
   }
 
-  .modal__button {
+  .modal-button {
     width: 100px;
     height: 44px;
     border-radius: 4px;
@@ -177,7 +177,7 @@ img {
     margin-top: 20px;
   }
 
-  .modal__button:hover {
+  .modal-button:hover {
     background-color: white;
     border: #4949e4;
     color: #4949e4;
@@ -297,4 +297,24 @@ li {
   border-color: #4949e4;
   border-radius: 4px;
   font-weight: bold;
+}
+
+/* hearts */
+
+.hearts {
+  margin: 0;
+  padding: 0;
+  margin-right: 180px;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.hearts li {
+  list-style: none;
+  display: inline-block;
+  text-align: right;
+  width: 3.5em;
+  height: 0.5em;
 }
