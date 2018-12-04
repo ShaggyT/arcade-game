@@ -171,7 +171,7 @@ img {
     color: white;
     font-size: 12px;
     border: none;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     text-transform:uppercase;
     font-weight: bold;
     margin-top: 20px;
@@ -193,22 +193,22 @@ img {
 #start-btn {
   float: right;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  width: 100px;
+  width: 80px;
   height: 40px;
   font-size: 14px;
   border-radius: 4px;
-  font-family: "Nunito";
+  /* font-family: "Nunito"; */
   margin-right: 100px;
   margin-top: 10px;
-  letter-spacing: 0.2em;
+  /* letter-spacing: 0.1em; */
   text-transform:uppercase;
   font-weight: bold;
   padding: 10px;
 }
 
 #start-btn:hover {
-  background-color: #fff2df;
   border: none;
+  color: #4949e4;
 }
 
 /* welcome modal */
@@ -279,4 +279,22 @@ ul {
 li {
   margin-bottom: 10px;
   font-family: "Nunito";
+}
+
+.start {
+  background-color: #4949e4;
+  color: white;
+  border-radius: 4px;
+  width: 60px;
+  height: 30px;
+  border: none;
+  text-transform:uppercase;
+}
+
+.start:hover {
+  background-color: white;
+  color: #4949e4;
+  border-color: #4949e4;
+  border-radius: 4px;
+  font-weight: bold;
 }

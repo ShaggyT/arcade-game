@@ -146,6 +146,9 @@ class Player {
   }
 
   handleClick(e) {
+    console.log("why cant i hear it", audio.src);
+    audio.src = 'sounds/click.wav';
+    audio.play();
     // set the avatar
     this.sprite = `images/${e.target.id}.png`;
     // chage the background color based on the selected avatar
@@ -206,3 +209,11 @@ for (let i = 0; i< avatar.length; i++) {
     avatar[i].classList.remove('bounceIn')
   });
 }
+
+
+//  close welcome modal
+const startGame = document.querySelector('.start');
+startGame.addEventListener('click', function() {
+  const welcomeModal = document.getElementById('welcome-modal');
+  welcomeModal.classList.add('hide')
+});
