@@ -18,13 +18,14 @@ img {
 
 .canvas {
   margin-top: 20px;
-  margin-right: 200px;
+  margin-right: 100px;
 }
 
 #avatars {
   float: left;
   margin-left: 20px;
 }
+
 .modal__background {
   position: absolute;
   top: 0;
@@ -39,11 +40,12 @@ img {
   position: relative;
   width: 400px;
   height: 200px;
-  top: 50%;
-  left: 50%;
+  top: 45%;
+  left: 45%;
   font-family: "Nunito";
-  background-color: rgba(250,250,250, 0.7);
+  background-color: white;
   transform: translate(-50%, -150%);
+  border-radius: 10px;
 }
 
 .modal__title {
@@ -54,29 +56,31 @@ img {
   font-size: 24px;
   display: block;
   margin: 0 auto;
-}
-
-.modal__close {
-  color: rgb(149, 109, 150);
-  font-size: 18px;
-  font-weight: bold;
-  float: right;
-  margin-right: 20px;
-  margin-top: 20px;
+  text-transform:uppercase;
 }
 
 .modal__button {
-  width: 80px;
-  height: 40px;
+  width: 100px;
+  height: 44px;
   border-radius: 4px;
   box-shadow: 0 4px 14px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.05);
-  background-color: rgb(149, 109, 150);
+  background-color: #4949e4;
   color: white;
   font-size: 12px;
   border: none;
-  letter-spacing: 1px;
+  letter-spacing: 0.2em;
+  text-transform:uppercase;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
+.modal__button:hover {
+  background-color: white;
+  border: #4949e4;
+  color: #4949e4;
+  font-weight: bold;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
 .hide {
   display: none;
 }
@@ -182,26 +186,95 @@ img {
   }
   }
 
-  /* Start Button */
+/* Start Button */
 
-  #start-btn {
-    float: right;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    width: 100px;
-    height: 40px;
-    font-size: 14px;
-    border-radius: 4px;
-    font-family: "Nunito";
-    margin-right: 100px;
-    margin-top: 10px;
-    letter-spacing: 0.2em;
-    text-transform:uppercase;
-    font-weight: bold;
-    padding: 10px;
-  }
+#start-btn {
+  float: right;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  width: 100px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 4px;
+  font-family: "Nunito";
+  margin-right: 100px;
+  margin-top: 10px;
+  letter-spacing: 0.2em;
+  text-transform:uppercase;
+  font-weight: bold;
+  padding: 10px;
+}
 
-  #start-btn:hover {
-    background-color: rgb(149, 109, 150);
-    border: none;
-    color: white;
-  }
+#start-btn:hover {
+  background-color: #fff2df;
+  border: none;
+}
+
+/* welcome modal */
+
+.modal {
+	position: fixed;
+  font-family: "Nunito";
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+
+.modal:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.modal > div {
+  position: relative;
+  background: white;
+	width: 400px;
+	padding: 5px 20px 13px 20px;
+  margin: 10% auto;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+	background: #4949e4;
+	color: white;
+  box-shadow: 1px 1px 3px #000;
+  border-radius: 12px;
+	line-height: 25px;
+	right: -12px;
+	top: -10px;
+	width: 24px;
+  text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.close:hover {
+  background: white;
+  color: black;
+ }
+
+.title {
+  text-transform:uppercase;
+  font-family: "Nunito";
+  color: #4949e4;
+}
+
+ul {
+  list-style-position: inside;
+  margin-left: 0;
+  padding-left: 2em;
+  text-indent: -1em;
+  text-align: left;
+  list-style-type: square;
+ }
+
+li {
+  margin-bottom: 10px;
+  font-family: "Nunito";
+}

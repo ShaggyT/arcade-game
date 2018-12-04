@@ -1,6 +1,11 @@
 //  Globals
 var audio = new Audio;
 
+// Upon page load open the welcome modal
+window.onload = function() {
+  window.location.href = "#welcome-modal";
+}
+
 // Enemies our player must avoid
 // arguments to give enemies  different position
 class Enemy {
