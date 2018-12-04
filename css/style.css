@@ -21,70 +21,13 @@ img {
   margin-right: 100px;
 }
 
+/* avatars */
 #avatars {
   float: left;
   margin-left: 20px;
 }
 
-.modal__background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0,0,0,0.5);
-  border-radius: 4px;
-}
-
-.modal__body {
-  position: relative;
-  width: 400px;
-  height: 200px;
-  top: 45%;
-  left: 45%;
-  font-family: "Nunito";
-  background-color: white;
-  transform: translate(-50%, -150%);
-  border-radius: 10px;
-}
-
-.modal__title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 1.5rem;
-  font-size: 24px;
-  display: block;
-  margin: 0 auto;
-  text-transform:uppercase;
-}
-
-.modal__button {
-  width: 100px;
-  height: 44px;
-  border-radius: 4px;
-  box-shadow: 0 4px 14px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.05);
-  background-color: #4949e4;
-  color: white;
-  font-size: 12px;
-  border: none;
-  letter-spacing: 0.2em;
-  text-transform:uppercase;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.modal__button:hover {
-  background-color: white;
-  border: #4949e4;
-  color: #4949e4;
-  font-weight: bold;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
-.hide {
-  display: none;
-}
-
+/* background color */
 .char-princess-girl {
   background: linear-gradient(to left, #a1c4fd, #c2e9fb);
 }
@@ -105,8 +48,7 @@ img {
   background: linear-gradient(to left,#ffecd2, #fcb69f);
 }
 
-/* Animation */
-
+/* animation for avatars */
 /* Flipping Card (flipInY): http://www.theappguruz.com/tag-tools/web/CSSAnimations/  */
 
 .bounceIn {
@@ -186,7 +128,67 @@ img {
   }
   }
 
-/* Start Button */
+  /* win modal */
+  .modal__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    border-radius: 4px;
+  }
+
+  .modal__body {
+    position: relative;
+    width: 400px;
+    height: 200px;
+    top: 45%;
+    left: 45%;
+    font-family: "Nunito";
+    background-color: white;
+    transform: translate(-50%, -150%);
+    border-radius: 10px;
+  }
+
+  .modal__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem;
+    font-size: 24px;
+    display: block;
+    margin: 0 auto;
+    text-transform:uppercase;
+  }
+
+  .modal__button {
+    width: 100px;
+    height: 44px;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.05);
+    background-color: #4949e4;
+    color: white;
+    font-size: 12px;
+    border: none;
+    letter-spacing: 0.2em;
+    text-transform:uppercase;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .modal__button:hover {
+    background-color: white;
+    border: #4949e4;
+    color: #4949e4;
+    font-weight: bold;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  .hide {
+    display: none;
+  }
+
+/* start button */
 
 #start-btn {
   float: right;
