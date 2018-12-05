@@ -4,7 +4,7 @@ body {
   background: #feada6;
   background: linear-gradient(to left, #feada6, #f5efef);
   overflow: hidden;
-  font-family: "Nunito";
+  font-family: 'Nunito','Open Sans','Times New Roman', 'Sans Serif', serif;
 }
 
 img {
@@ -145,7 +145,7 @@ img {
     height: 200px;
     top: 45%;
     left: 45%;
-    font-family: "Nunito";
+    font-family: 'Nunito','Open Sans','Times New Roman', 'Sans Serif', serif;
     background-color: white;
     transform: translate(-50%, -150%);
     border-radius: 10px;
@@ -197,10 +197,8 @@ img {
   height: 40px;
   font-size: 14px;
   border-radius: 4px;
-  /* font-family: "Nunito"; */
+  font-family:  'Nunito','Open Sans','Times New Roman', 'Sans Serif', serif;
   margin-right: 100px;
-  margin-top: 10px;
-  /* letter-spacing: 0.1em; */
   text-transform:uppercase;
   font-weight: bold;
   padding: 10px;
@@ -215,7 +213,7 @@ img {
 
 .modal {
 	position: fixed;
-  font-family: "Nunito";
+  font-family: 'Nunito','Open Sans','Times New Roman', 'Sans Serif', serif;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -263,7 +261,7 @@ img {
 
 .title {
   text-transform:uppercase;
-  font-family: "Nunito";
+  font-family: 'Nunito','Open Sans','Times New Roman', 'Sans Serif', serif;
   color: #4949e4;
 }
 
@@ -278,7 +276,7 @@ ul {
 
 li {
   margin-bottom: 10px;
-  font-family: "Nunito";
+  font-family: font-family:  'Nunito','Open Sans','Times New Roman', 'Sans Serif', serif;
 }
 
 .start {
@@ -304,17 +302,21 @@ li {
 .hearts {
   margin: 0;
   padding: 0;
-  margin-right: 180px;
+  margin-right: 200px;
   display: inline-flex;
   flex-wrap: nowrap;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 0px;
 }
 
 .hearts li {
   list-style: none;
   display: inline-block;
   text-align: right;
-  width: 3.5em;
-  height: 0.5em;
+  width: 2em;
+  height: 0.25em;
+}
+
+.heart img {
+  width: 30px;
 }

@@ -4,12 +4,11 @@ let audio = new Audio,
     livesContainer;
 
 // Upon page load open the welcome modal
-window.onload = function() {
-  window.location.href = "#welcome-modal";
-}
+// window.onload = function() {
+//   window.location.href = "#welcome-modal";
+// }
 
-
-let addLives = () => {
+let createHearts = () => {
   for (let i = 0; i < lives ; i++) {
     let life = document.createElement('li');
     livesContainer = document.getElementById('lives');
@@ -19,7 +18,7 @@ let addLives = () => {
   }
 };
 
-addLives();
+createHearts();
 
 // Enemies our player must avoid
 // arguments to give enemies  different position
@@ -30,7 +29,6 @@ class Enemy {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-
     // enemies start position
     this.x = x;
     // move toward the center of the row
@@ -69,10 +67,6 @@ class Enemy {
   }
 }
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
 // Player Class
 class Player {
   // to initialize a new object
@@ -83,7 +77,6 @@ class Player {
     this.horizontal = 101;
     this.vertical = 83;
     // start position of the player
-
     this.x0 = this.horizontal * 2;
     this.y0 = (this.vertical * 4) + 55;
     // current position of the player (x,y)
@@ -91,12 +84,10 @@ class Player {
     this.y = this.y0;
     this.winner = false;
   }
-
   // Draw the player on the screen
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
-
   // key -> direction ot the player's movement
   // the position (0,0) is on tope-left corner -> up movement is this.y - this.vertical
   handleInput(key) {
@@ -137,14 +128,12 @@ class Player {
   }
 
   update() {
-
     for (let enemy of allEnemies) {
       // collision
-
       if(this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
-        lives = lives - 1;
+        lives -= 1;
+        // lose a heart upon collision
         this.lose();
-
         audio.src = 'sounds/lost_a_life.wav';
         audio.play();
         this.reset();
@@ -154,9 +143,6 @@ class Player {
         audio.src = 'sounds/win.wav';
         audio.play();
         this.winner = true;
-        setTimeout(function(){
-          this.reset;
-        }, 3000);
       }
     }
   }
@@ -174,7 +160,7 @@ class Player {
     if (lives > 0) {
       livesContainer.removeChild(livesContainer.childNodes[lives]);
     } else {
-      livesContainer.innerHTML = ' ';
+      livesContainer.innerHTML = '';
     }
   }
 
@@ -189,15 +175,14 @@ const enemy1 = new Enemy(-101,0, 200);
 const enemy4 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
 
-// enemies will strt moving upon clicking the start button
+// enemies will start moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
   allEnemies.push( enemy1,  enemy4);
 })
 
-// Place the player object in a variable called playsmwsmwsmwsmwer
+// Place the player object in a variable called player
 const player = new Player();
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -209,9 +194,7 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
-
 });
 
 // select player
