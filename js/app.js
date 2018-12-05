@@ -1,7 +1,8 @@
 //  Globals
 let audio = new Audio,
     lives = 6,
-    livesContainer;
+    livesContainer,
+    points = 0;
 
 // Upon page load open the welcome modal
 // window.onload = function() {
@@ -145,6 +146,9 @@ class Player {
         this.winner = true;
       }
     }
+    if(this.y === 55) {
+      this.addPoints();
+    }
   }
 
   handleClick(e) {
@@ -164,21 +168,28 @@ class Player {
     }
   }
 
+   addPoints(){
+    let point = document.querySelector('.result');
+    points += 10;
+    point.innerHTML = `${points}`
+  }
+
 }
 
 // Now instantiate your objects.
 
 // Place all enemy objects in an array called allEnemies
 const enemy1 = new Enemy(-101,0, 200);
-// const enemy2 = new Enemy(-101,83, 300);
-// const enemy3 = new Enemy(-101*3, 83, 300);
+const enemy2 = new Enemy(-101,83, 300);
+const enemy3 = new Enemy(-101*3, 83, 300);
 const enemy4 = new Enemy(-101*2, 83*2, 200);
+const enemy5 = new Enemy(-101*5, 83*2, 400);
 const allEnemies = [];
 
 // enemies will start moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
-  allEnemies.push( enemy1,  enemy4);
+  allEnemies.push( enemy1, enemy2, enemy3, enemy4, enemy5);
 })
 
 // Place the player object in a variable called player
