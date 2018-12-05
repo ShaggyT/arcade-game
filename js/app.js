@@ -1,7 +1,8 @@
 //  Globals
 let audio = new Audio,
     lives = 6,
-    livesContainer;
+    livesContainer,
+    points = 0;
 
 // Upon page load open the welcome modal
 // window.onload = function() {
@@ -145,6 +146,9 @@ class Player {
         this.winner = true;
       }
     }
+    if(this.y === 55) {
+      this.addPoints();
+    }
   }
 
   handleClick(e) {
@@ -162,6 +166,12 @@ class Player {
     } else {
       livesContainer.innerHTML = '';
     }
+  }
+
+   addPoints(){
+    let point = document.querySelector('.result');
+    points += 10;
+    point.innerHTML = `${points}`
   }
 
 }
