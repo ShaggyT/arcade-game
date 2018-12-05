@@ -249,6 +249,9 @@ var Engine = (function(global) {
         'images/char-horn-girl.png',
         'images/char-princess-girl.png',
         'images/Heart.png',
+        'images/Gem Green.png',
+        'images/Gem Blue.png',
+        'images/Gem Orange.png',
     ]);
     //_ execute after the resource finishes loading the array of images
     Resources.onReady(init);
