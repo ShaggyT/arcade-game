@@ -20,23 +20,23 @@ var Engine = (function(global) {
      */
      //_a window property that returns a reference to the document contained within our window object - the global object is the "this" object window passed to the IFFE
     var doc = global.document,
-         //_a window property that points to itself (window object)
+         //a window property that points to itself (window object)
         win = global.window,
-        // _canvas element which holds our game content
+        // canvas element which holds our game content
         canvas = doc.createElement('canvas'),
-        //_ get the drawing surface for out game -  we want 2d context
+        //get the drawing surface for out game -  we want 2d context
         ctx = canvas.getContext('2d'),
         lastTime,
         // we need the returned id from requestAnimationFrame to passinto to cancelAnimationMethod to stop the game
         id;
-    // _dimensions of our game
+    // dimensions of our game
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
     canvas.classList.add('canvas');
-
-    const modal = document.querySelector('.modal__background');
-    const replay = document.querySelector('.modal__replay');
+    // win modal
+    const modal = document.querySelector('.win-modal-background');
+    const replay = document.querySelector('.win-modal-replay');
     replay.addEventListener('click', function() {
       modal.classList.toggle('hide');
       player.reset();
@@ -44,16 +44,46 @@ var Engine = (function(global) {
       win.requestAnimationFrame(main);
     });
     function toggleModal() {
-      const modal = document.querySelector('.modal__background');
+      const modal = document.querySelector('.win-modal-background');
       modal.classList.toggle('hide');
     }
-    const cancel = document.querySelector('.modal__close');
+    const cancel = document.querySelector('.win-modal-close');
     cancel.addEventListener('click', function() {
       toggleModal();
       player.reset();
       player.winner = false;
       win.requestAnimationFrame(main);
     });
+
+    // gameover modal
+    const gameOverModal = document.querySelector('.lose-modal-background');
+    const gameOver = document.querySelector('.lose-modal-replay');
+    // reset after clicking the replay button in game over modal
+    gameOver.addEventListener('click', function() {
+      audio.src = 'sounds/game_over.wav';
+      audio.play();
+      toggleModalClose();
+      player.reset();
+      player.winner = false;
+      win.requestAnimationFrame(main);
+      lives = 6;
+      addLives();
+    });
+    function toggleModalClose() {
+      const gameOverModal = document.querySelector('.lose-modal-background');
+      gameOverModal.classList.toggle('hide');
+    }
+    // reset after closing the game over modal
+    const cancelLose = document.querySelector('.lose-modal-close');
+    cancelLose.addEventListener('click', function() {
+      toggleModalClose();
+      player.reset();
+      player.winner = false;
+      win.requestAnimationFrame(main);
+      lives = 6;
+      addLives();
+    });
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -65,29 +95,29 @@ var Engine = (function(global) {
          * computer is) - hurray time!
          */
         var now = Date.now(),
-            //_gives us constant time between frames
+            //gives us constant time between frames
             dt = (now - lastTime) / 1000.0;
-
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
         update(dt);
-        //_draw changes made after update
+        //draw changes made after update
         render();
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
         lastTime = now;
-        // console.log(now)
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        //_ a window method that performs the drawing to the canvas of what we rendered earlier and takes the callback argument of main which is invoked before repainting the next frame
+        //a window method that performs the drawing to the canvas of what we rendered earlier and takes the callback argument of main which is invoked before repainting the next frame
         if(player.winner === true){
           win.cancelAnimationFrame(id);
           modal.classList.toggle('hide');
+        } else if(lives === 0) {
+          gameOverModal.classList.toggle('hide');
         } else {
           id = win.requestAnimationFrame(main);
         }
@@ -101,7 +131,7 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        //_first call to main
+        //first call to main
         main();
     }
 
@@ -116,7 +146,6 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-
         // checkCollisions();
     }
 
@@ -128,7 +157,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
+        allEnemies && allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
         player.update();
@@ -150,14 +179,14 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/grass-block.png'   // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
             row, col;
 
         // Before drawing, clear existing canvas
-        //_ x, y for the starting position
+        //x, y for the starting position
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
         /* Loop through the number of rows and columns we've defined above
@@ -219,6 +248,7 @@ var Engine = (function(global) {
         'images/char-cat-girl.png',
         'images/char-horn-girl.png',
         'images/char-princess-girl.png',
+        'images/Heart.png',
     ]);
     //_ execute after the resource finishes loading the array of images
     Resources.onReady(init);
@@ -227,6 +257,6 @@ var Engine = (function(global) {
      * object when run in a browser) so that developers can use it more easily
      * from within their app.js files.
      */
-     //_ add a property to the window object, which holds our 2d context for easy access in the global scope
+     //add a property to the window object, which holds our 2d context for easy access in the global scope
     global.ctx = ctx;
 })(this);
