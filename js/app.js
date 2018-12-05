@@ -21,6 +21,29 @@ let createHearts = () => {
 
 createHearts();
 
+// add gems pseudo code 
+// 3 rows, 5 column to place the gems on
+// row index 2 to 4 and column index 0 to 4
+// randomly select 3 grids based on the row and column and place the Gems inside
+// if the x and y  of the gem and the player is equal add the points of the gem to the points and make the gem disappear
+// to randomly select the row and column
+// randomly select the column -> Math.floor(Math.random()*5)
+// randomly select the row -> Math.floor(Math.random()*3)
+// array of gems: let allGem = ['Orange', 'Blue', 'green'];
+// randomly select a gem from allgems
+// Math.floor(Math.random()*3) -> based on this repeat the selection of the gem positions
+// let gemCounts = Math.floor(Math.random()*3)
+// for (let i = 0; i < gemCounts; i++) {
+//  let randomCol = Math.floor(Math.random()*5);
+//  let randomRow = Math.floor(Math.random()*3);
+// let randomGemIndex = allGem[Math.floor(Math.random()*3)];
+// five x and y coordinate to the selected gems
+// }
+// if player.x === gemX && player,y === gemY {
+//  points += gemPoint
+//  selecteGem.addClass('hide');
+// }
+
 // Enemies our player must avoid
 // arguments to give enemies  different position
 class Enemy {
