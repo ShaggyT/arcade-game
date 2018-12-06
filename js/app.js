@@ -21,30 +21,6 @@ let createHearts = () => {
 
 createHearts();
 
-// add gems pseudo code
-// 3 rows, 5 column to place the gems on
-// row index 2 to 4 and column index 0 to 4
-// randomly select 3 grids based on the row and column and place the Gems inside
-// if the x and y  of the gem and the player is equal add the points of the gem to the points and make the gem disappear
-// to randomly select the row and column
-// randomly select the column -> Math.floor(Math.random()*5)
-// randomly select the row -> Math.floor(Math.random()*3)
-// array of gems: let allGem = ['Orange', 'Blue', 'green'];
-// randomly select a gem from allgems
-// Math.floor(Math.random()*3) -> based on this repeat the selection of the gem positions
-// let gemCounts = Math.floor(Math.random()*3)
-// for (let i = 0; i < gemCounts; i++) {
-//  let randomCol = Math.floor(Math.random()*5);
-//  let randomRow = Math.floor(Math.random()*3);
-// let randomGemIndex = allGem[Math.floor(Math.random()*3)];
-// five x and y coordinate to the selected gems
-// }
-
-// if player.x === gemX && player,y === gemY {
-//  points += gemPoint
-//  selecteGem.addClass('hide');
-// }
-
 // all gems
 const cushionGems = ['images/Gem Orange.png', 'images/Gem Green.png','images/Gem Blue.png'];
 
@@ -53,9 +29,7 @@ class Gem {
   constructor() {
     this.sprite = this.randomGem(cushionGems);
     this.x = this.gemXCoordinate();
-    console.log("what is my x", this.x);
     this.y = this.gemYCoordinate();
-    console.log("what is my y", this.y);
   }
 
   // Draw the gem on the screen
@@ -67,66 +41,54 @@ class Gem {
   randomGem(arr) {
     let gemsLenght = arr.length;
     let randomIndex = Math.floor(Math.random()* gemsLenght);
-    console.log("what is my sprite", cushionGems[randomIndex]);
     return cushionGems[randomIndex];
   }
 
-
+  // Y coordinates for randomly place the gem
   gemYCoordinate() {
-
     // 3 possible rows  for gem with index:1,2,3
     let randomGemRow = Math.ceil(Math.random()*3);
-    // let gemCoordinates = (randomGemRow, randomGemCol)
     switch(randomGemRow) {
       case 1:
           // in row 1 y is between 83 and 160 -> avg = 160+83/2 = 120
           this.y = 120;
-          console.log("y1", this.y)
           break;
       case 2:
           // in row 2 y is between 160 and 240 -> avg = 160+240/2 = 200
           this.y = 200;
-          console.log("y2", this.y)
           break;
       case 3:
           // in row y x is between 240 and 320 -> avg = 320+240/2 = 283
           this.y = 280;
-          console.log("y3", this.y)
           break;
     }
     return this.y;
   }
 
-
+  // X coordinates for eandomly placing the gem
   gemXCoordinate() {
     // 5 possible columns for ge with index 0,1,2,3,4
     let reandomGemCol = Math.floor(Math.random()*5);
-    // let gemCoordinates = (randomGemRow, randomGemCol)
     switch(reandomGemCol) {
       case 1:
           // in col 1 x is between 0 and 110 -> avg = 0+110/2 = 55
           this.x = 55 - 30;
-          console.log("x1", this.x);
           break;
       case 2:
           // in col 2 x is between 110 and 220 -> avg = 110+220/2 = 165
           this.x = 165 - 40;
-          console.log("x2", this.x);
           break;
       case 3:
           // in row 3 x is between 220 and 330 -> avg = 220+330/2 = 275
           this.x = 275 - 50;
-          console.log("x3", this.x);
           break;
       case 4:
           // in row 4 x is between 330 and 440 -> avg = 330+440/2 = 385
           this.x = 385 - 60;
-          console.log("x4", this.x);
           break;
       case 5:
           // in row 5 x is between 440 and 550 -> avg = 440+550/2 = 495
           this.x = 495 - 70;
-          console.log("x5", this.x);
           break;
     }
     return this.x;
@@ -139,8 +101,51 @@ class Gem {
       'images/Gem Green.png' : 20,
       'images/Gem Blue.png' : 30
     };
-    // console.log("what is my gemPoint", gemPoint[gem]);
     return gemPoint[gem];
+  }
+
+  // whether the player and the gem are colliding
+  reachedGem() {
+    // position of the player in a grid
+    let playerCoordinates = {
+      x: player.x,
+      y: player.y + 55,
+      width: (player.horizontal)/2,
+      height: (player.vertical/2)
+    };
+    // position of a gem in a grid
+    let gemCoordinates = {
+      x: this.x,
+      y: this.y,
+      width: (player.horizontal)/2,
+      height: (player.vertical/2)
+    };
+    // check the X coordinates range of collision
+    let collisonXRange = playerCoordinates.x < gemCoordinates.x + gemCoordinates.width &&
+        playerCoordinates.x + playerCoordinates.width > gemCoordinates.x
+    // check the X coordinates range of collision
+    let collisionYRange = playerCoordinates.y < gemCoordinates.y + gemCoordinates.height &&
+    playerCoordinates.height + playerCoordinates.y > gemCoordinates.y
+
+    if ( collisonXRange && collisionYRange ) {
+        let gem = this.sprite;
+        // get the gem upon collision
+        this.getGem(gem);
+      }
+    }
+
+  // add  points when player reached a gem
+  getGem(gem) {
+    let newPoint = this.gemPoints(gem)
+    let point = document.querySelector('.result');
+    points += this.gemPoints(gem);
+    point.innerHTML = `${points}`
+    // allGems = allGems.filter(item => item !== gem)
+
+  }
+
+  update() {
+    this.reachedGem();
   }
 
 }
@@ -151,7 +156,7 @@ const gem3 = new Gem();
 
 const allGems = [];
 allGems.push( gem1, gem2, gem3);
-console.log("what are all my gems", allGems);
+
 // Enemies our player must avoid
 // arguments to give enemies  different position
 class Enemy {
@@ -214,7 +219,6 @@ class Player {
     // current position of the player (x,y)
     this.x = this.x0;
     this.y = this.y0;
-    console.log("what is players coordinate x", this.x);
     this.winner = false;
   }
   // Draw the player on the screen
@@ -314,7 +318,6 @@ class Player {
 // const enemy1 = new Enemy(-101,0, 200);
 // const enemy2 = new Enemy(-101,83, 300);
 const enemy1 = new Enemy(-101,0, 100);
-
 // const enemy3 = new Enemy(-101*3, 83, 300);
 // const enemy4 = new Enemy(-101*2, 83*2, 200);
 // const enemy5 = new Enemy(-101*5, 83*2, 400);
@@ -323,9 +326,7 @@ const allEnemies = [];
 // enemies will start moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
-  allEnemies.push( enemy1,);
-  console.log("waht are all my enemies", allEnemies)
-
+  allEnemies.push( enemy1);
 })
 
 // Place the player object in a variable called player
