@@ -158,7 +158,7 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
         allEnemies && allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+          enemy.update(dt);
         });
         player.update();
     }
@@ -219,10 +219,14 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
         allEnemies.forEach(function(enemy) {
-            enemy.render();
+          enemy.render();
         });
 
         player.render();
+
+        allGems.forEach(function(gem) {
+          gem.render();
+        });
     }
 
     /* This function does nothing but it could have been a good place to

@@ -3,7 +3,7 @@ let audio = new Audio,
     lives = 6,
     livesContainer,
     points = 0;
-
+  let collide = false;
 // Upon page load open the welcome modal
 // window.onload = function() {
 //   window.location.href = "#welcome-modal";
@@ -21,7 +21,7 @@ let createHearts = () => {
 
 createHearts();
 
-// add gems pseudo code 
+// add gems pseudo code
 // 3 rows, 5 column to place the gems on
 // row index 2 to 4 and column index 0 to 4
 // randomly select 3 grids based on the row and column and place the Gems inside
@@ -39,11 +39,119 @@ createHearts();
 // let randomGemIndex = allGem[Math.floor(Math.random()*3)];
 // five x and y coordinate to the selected gems
 // }
+
 // if player.x === gemX && player,y === gemY {
 //  points += gemPoint
 //  selecteGem.addClass('hide');
 // }
 
+// all gems
+const cushionGems = ['images/Gem Orange.png', 'images/Gem Green.png','images/Gem Blue.png'];
+
+// Gem class
+class Gem {
+  constructor() {
+    this.sprite = this.randomGem(cushionGems);
+    this.x = this.gemXCoordinate();
+    console.log("what is my x", this.x);
+    this.y = this.gemYCoordinate();
+    console.log("what is my y", this.y);
+  }
+
+  // Draw the gem on the screen
+  render() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+
+  // random gem
+  randomGem(arr) {
+    let gemsLenght = arr.length;
+    let randomIndex = Math.floor(Math.random()* gemsLenght);
+    console.log("what is my sprite", cushionGems[randomIndex]);
+    return cushionGems[randomIndex];
+  }
+
+
+  gemYCoordinate() {
+
+    // 3 possible rows  for gem with index:1,2,3
+    let randomGemRow = Math.ceil(Math.random()*3);
+    // let gemCoordinates = (randomGemRow, randomGemCol)
+    switch(randomGemRow) {
+      case 1:
+          // in row 1 y is between 83 and 160 -> avg = 160+83/2 = 120
+          this.y = 120;
+          console.log("y1", this.y)
+          break;
+      case 2:
+          // in row 2 y is between 160 and 240 -> avg = 160+240/2 = 200
+          this.y = 200;
+          console.log("y2", this.y)
+          break;
+      case 3:
+          // in row y x is between 240 and 320 -> avg = 320+240/2 = 283
+          this.y = 280;
+          console.log("y3", this.y)
+          break;
+    }
+    return this.y;
+  }
+
+
+  gemXCoordinate() {
+    // 5 possible columns for ge with index 0,1,2,3,4
+    let reandomGemCol = Math.floor(Math.random()*5);
+    // let gemCoordinates = (randomGemRow, randomGemCol)
+    switch(reandomGemCol) {
+      case 1:
+          // in col 1 x is between 0 and 110 -> avg = 0+110/2 = 55
+          this.x = 55 - 30;
+          console.log("x1", this.x);
+          break;
+      case 2:
+          // in col 2 x is between 110 and 220 -> avg = 110+220/2 = 165
+          this.x = 165 - 40;
+          console.log("x2", this.x);
+          break;
+      case 3:
+          // in row 3 x is between 220 and 330 -> avg = 220+330/2 = 275
+          this.x = 275 - 50;
+          console.log("x3", this.x);
+          break;
+      case 4:
+          // in row 4 x is between 330 and 440 -> avg = 330+440/2 = 385
+          this.x = 385 - 60;
+          console.log("x4", this.x);
+          break;
+      case 5:
+          // in row 5 x is between 440 and 550 -> avg = 440+550/2 = 495
+          this.x = 495 - 70;
+          console.log("x5", this.x);
+          break;
+    }
+    return this.x;
+  }
+
+  // points of each gem
+  gemPoints(gem) {
+    const gemPoint = {
+      'images/Gem Orange.png': 10,
+      'images/Gem Green.png' : 20,
+      'images/Gem Blue.png' : 30
+    };
+    // console.log("what is my gemPoint", gemPoint[gem]);
+    return gemPoint[gem];
+  }
+
+}
+
+const gem1 = new Gem();
+const gem2 = new Gem();
+const gem3 = new Gem();
+
+const allGems = [];
+allGems.push( gem1, gem2, gem3);
+console.log("what are all my gems", allGems);
 // Enemies our player must avoid
 // arguments to give enemies  different position
 class Enemy {
@@ -56,7 +164,7 @@ class Enemy {
     // enemies start position
     this.x = x;
     // move toward the center of the row
-    this.y = y + 55;
+    this.y = y + 58;
     // distance between blocks
     this.horizontal = 101;
     // end point limit to reset the enemy position - when enemy reaches the endpoint, it will reset the enemy position
@@ -71,7 +179,7 @@ class Enemy {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    // _handles enemy movement- use dt(time delta) to normalize gamse speed
+    // handles enemy movement- use dt(time delta) to normalize gamse speed
 
     // check enemies position status
       // within the grid -> move forward by x = v(dt)
@@ -84,9 +192,9 @@ class Enemy {
     }
   }
   // Draw the enemy on the screen, required method for game
-  // _renders the result of the previous method and uses HTML Canvas method to draw the enemy's sprite new position to the game board
+  // renders the result of the previous method and uses HTML Canvas method to draw the enemy's sprite new position to the game board
   render() {
-    //_Resources.get -> returns the cached image of our stri[e ]
+    //Resources.get -> returns the cached image of our stri[e ]
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 }
@@ -102,10 +210,11 @@ class Player {
     this.vertical = 83;
     // start position of the player
     this.x0 = this.horizontal * 2;
-    this.y0 = (this.vertical * 4) + 55;
+    this.y0 = (this.vertical * 4) + 58;
     // current position of the player (x,y)
     this.x = this.x0;
     this.y = this.y0;
+    console.log("what is players coordinate x", this.x);
     this.winner = false;
   }
   // Draw the player on the screen
@@ -163,13 +272,13 @@ class Player {
         this.reset();
       }
       // win
-      if(this.y === 55) {
+      if(this.y === 58) {
         audio.src = 'sounds/win.wav';
         audio.play();
         this.winner = true;
       }
     }
-    if(this.y === 55) {
+    if(this.y === 58) {
       this.addPoints();
     }
   }
@@ -202,17 +311,21 @@ class Player {
 // Now instantiate your objects.
 
 // Place all enemy objects in an array called allEnemies
-const enemy1 = new Enemy(-101,0, 200);
-const enemy2 = new Enemy(-101,83, 300);
-const enemy3 = new Enemy(-101*3, 83, 300);
-const enemy4 = new Enemy(-101*2, 83*2, 200);
-const enemy5 = new Enemy(-101*5, 83*2, 400);
+// const enemy1 = new Enemy(-101,0, 200);
+// const enemy2 = new Enemy(-101,83, 300);
+const enemy1 = new Enemy(-101,0, 100);
+
+// const enemy3 = new Enemy(-101*3, 83, 300);
+// const enemy4 = new Enemy(-101*2, 83*2, 200);
+// const enemy5 = new Enemy(-101*5, 83*2, 400);
 const allEnemies = [];
 
 // enemies will start moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
-  allEnemies.push( enemy1, enemy2, enemy3, enemy4, enemy5);
+  allEnemies.push( enemy1,);
+  console.log("waht are all my enemies", allEnemies)
+
 })
 
 // Place the player object in a variable called player
@@ -220,16 +333,19 @@ const player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
-    //_maps key codes to a corresponding string
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
-    player.handleInput(allowedKeys[e.keyCode]);
-});
+startBtn.addEventListener('click', function() {
+  document.addEventListener('keyup', function(e) {
+      //maps key codes to a corresponding string
+      var allowedKeys = {
+          37: 'left',
+          38: 'up',
+          39: 'right',
+          40: 'down'
+      };
+      player.handleInput(allowedKeys[e.keyCode]);
+  });
+})
+
 
 // select player
 const avatars = document.getElementById('avatars');
