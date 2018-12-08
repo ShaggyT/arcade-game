@@ -3,13 +3,29 @@ let audio = new Audio,
     lives = 6,
     livesContainer,
     points = 0;
-  let collide = false;
-// Upon page load open the welcome modal
-// window.onload = function() {
-//   window.location.href = "#welcome-modal";
-// }
 
-let createHearts = () => {
+// Upon page load open the welcome modal
+window.onload = function() {
+  // window.location.href = "#welcome-modal";
+  generateAvatars();
+  generateHearts();
+}
+
+// create avatars
+const avatarsId = ['char-princess-girl','char-cat-girl','char-horn-girl','char-pink-girl','char-boy'];
+
+let generateAvatars = () => {
+  for (let element of avatarsId) {
+    avatarsContainer = document.getElementById('avatars');
+    let avatar = document.createElement('img');
+    avatarsContainer.appendChild(avatar);
+    avatar.src=`images/${element}.png`
+    avatar.id=`${element}`
+  }
+};
+
+// create hearts
+let generateHearts = () => {
   for (let i = 0; i < lives ; i++) {
     let life = document.createElement('li');
     livesContainer = document.getElementById('lives');
@@ -18,8 +34,6 @@ let createHearts = () => {
     life.classList.add('heart');
   }
 };
-
-createHearts();
 
 // all gems
 const cushionGems = ['images/Gem Orange.png', 'images/Gem Green.png','images/Gem Blue.png'];
@@ -30,12 +44,21 @@ class Gem {
     this.sprite = this.randomGem(cushionGems);
     this.x = this.gemXCoordinate();
     this.y = this.gemYCoordinate();
+    this.horizontal = 101;
+    this.vertical = 83;
+    this.width = this.horizontal/2;
+    this.height = this.vertical/2;
+    // this.delayGemRender = undefined;
   }
 
   // Draw the gem on the screen
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
+
+  // remove() {
+  //   ctx.clearRect(this.x,this.y, (this.x + this.width) , (this.y + this.height));
+  // }
 
   // random gem
   randomGem(arr) {
@@ -117,37 +140,53 @@ class Gem {
     let gemCoordinates = {
       x: this.x,
       y: this.y,
-      width: (player.horizontal)/2,
-      height: (player.vertical/2)
+      width: this.width,
+      height: this.height,
     };
     // check the X coordinates range of collision
     let collisonXRange = playerCoordinates.x < gemCoordinates.x + gemCoordinates.width &&
-        playerCoordinates.x + playerCoordinates.width > gemCoordinates.x
+        playerCoordinates.x + playerCoordinates.width > gemCoordinates.x;
     // check the X coordinates range of collision
     let collisionYRange = playerCoordinates.y < gemCoordinates.y + gemCoordinates.height &&
-    playerCoordinates.height + playerCoordinates.y > gemCoordinates.y
+    playerCoordinates.height + playerCoordinates.y > gemCoordinates.y;
 
     if ( collisonXRange && collisionYRange ) {
+        this.bonus = true;
         let gem = this.sprite;
         // get the gem upon collision
+
+        console.log("what is my audio", audio.src);
         this.getGem(gem);
+
       }
     }
 
   // add  points when player reached a gem
   getGem(gem) {
+    audio.src = 'sounds/bonus.wav';
+    audio.play();
     let newPoint = this.gemPoints(gem)
     let point = document.querySelector('.result');
     points += this.gemPoints(gem);
     point.innerHTML = `${points}`
     // allGems = allGems.filter(item => item !== gem)
-
+    // this.delay();
   }
 
   update() {
     this.reachedGem();
   }
 
+  // delay() {
+  //   this.delayGemRender = setTimeout(function() {
+  //     this.resetGem();
+  //   }, 5000);
+  // }
+  //
+  // resetGem() {
+  //   this.x = this.gemXCoordinate();
+  //   this.y = this.gemYCoordinate();
+  // }
 }
 
 const gem1 = new Gem();
@@ -220,6 +259,7 @@ class Player {
     this.x = this.x0;
     this.y = this.y0;
     this.winner = false;
+    this.bonus = false;
   }
   // Draw the player on the screen
   render() {
@@ -266,8 +306,10 @@ class Player {
 
   update() {
     for (let enemy of allEnemies) {
+      // dividing by 1.5 to make the distance betwen the player and the enemy less upon collision
+      let collisonXRange = enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5;
       // collision
-      if(this.y === enemy.y && (enemy.x + enemy.horizontal/1.5 > this.x && enemy.x < this.x + this.horizontal/1.5)) {
+      if(this.y === enemy.y && collisonXRange) {
         lives -= 1;
         // lose a heart upon collision
         this.lose();
@@ -277,9 +319,16 @@ class Player {
       }
       // win
       if(this.y === 58) {
-        audio.src = 'sounds/win.wav';
-        audio.play();
-        this.winner = true;
+        console.log("log the points", points);
+        if (points <= 150) {
+          console.log("will it hit here");
+          audio.src = 'sounds/win.wav';
+          audio.play();
+        } else {
+          audio.src = 'sounds/win_round.wav';
+          audio.play();
+          this.winner = true;
+        }
       }
     }
     if(this.y === 58) {
@@ -290,7 +339,7 @@ class Player {
   handleClick(e) {
     audio.src = 'sounds/click.wav';
     audio.play();
-    // set the avatar
+    // set the avatarGem
     this.sprite = `images/${e.target.id}.png`;
     // chage the background color based on the selected avatar
     document.body.className = e.target.id;
@@ -317,7 +366,7 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 // const enemy1 = new Enemy(-101,0, 200);
 // const enemy2 = new Enemy(-101,83, 300);
-const enemy1 = new Enemy(-101,0, 100);
+const enemy1 = new Enemy(-101,83, 100);
 // const enemy3 = new Enemy(-101*3, 83, 300);
 // const enemy4 = new Enemy(-101*2, 83*2, 200);
 // const enemy5 = new Enemy(-101*5, 83*2, 400);
@@ -326,6 +375,7 @@ const allEnemies = [];
 // enemies will start moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
+  $('#start-btn').attr('disabled',true);
   allEnemies.push( enemy1);
 })
 

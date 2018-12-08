@@ -122,6 +122,13 @@ var Engine = (function(global) {
           id = win.requestAnimationFrame(main);
         }
 
+        // allGems && allGems.forEach(function(gem) {
+        //   if(gem.bonus === true){
+        //     win.cancelAnimationFrame(id);
+        //   }
+        // });
+
+
     }
 
     /* This function does some initial setup that should only occur once,
