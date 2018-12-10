@@ -6,11 +6,11 @@ The [starter code](https://github.com/udacity/frontend-nanodegree-arcade-game) p
 
 ## Table of Contents
 
-- [Project Overview](#project overview)
+- [Project Overview](#project-overview)
 - [Instructions](#instructions)
 - [Dependencies](#dependencies)
 - [Installation](#installation)
-- [Live Preview](#live preview)
+- [Live Preview](#live-preview)
 - [Screenshots](#screenshots)
 
 ## Project Overview
