@@ -121,7 +121,6 @@ var Engine = (function(global) {
         } else {
           id = win.requestAnimationFrame(main);
         }
-
     }
 
     /* This function does some initial setup that should only occur once,
@@ -158,9 +157,16 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
         allEnemies && allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+          enemy.update(dt);
         });
         player.update();
+
+        allGems && allGems.forEach(function(gem, index) {
+          let result = gem.update();
+          if(result){
+            allGems.splice(index,1);
+          }
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -219,10 +225,14 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
         allEnemies.forEach(function(enemy) {
-            enemy.render();
+          enemy.render();
         });
 
         player.render();
+
+        allGems.forEach(function(gem) {
+          gem.render();
+        });
     }
 
     /* This function does nothing but it could have been a good place to
