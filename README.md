@@ -54,4 +54,4 @@ To play the game, [Click Here!](https://froggerudacity.netlify.com)
 
 ###  Screenshots
 
-<img src="imgages/screenshot.png" width=294 margin=5 style="margin: 0px 5px">
+![alt tag](screenshots/screenshot.png "Description goes here")
