@@ -342,9 +342,7 @@ li {
 }
 
 .hearts li {
-  /* list-style: none; */
   display: inline-block;
-  /* text-align: right; */
   width: 2em;
   height: 0.5em;
 }
@@ -366,5 +364,8 @@ li {
 }
 
 .char-image.active {
-    background: url(../images/Selector.png);
+  background: url(../images/Selector.png);
+  background-repeat: no-repeat;
+  padding-left: 0px;
+  padding-right: 5px;
 }
