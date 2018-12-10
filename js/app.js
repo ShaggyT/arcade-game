@@ -388,7 +388,6 @@ startBtn.addEventListener('click', function() {
 
 // select player
 const avatars = document.getElementById('avatars');
-console.log("what are avatars", avatars);
 avatars.addEventListener('click', function(e) {
   player.handleClick(e);
 });
