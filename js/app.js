@@ -258,35 +258,35 @@ class Player {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
   // key -> direction ot the player's movement
-  // the position (0,0) is on tope-left corner -> up movement is this.y - this.vertical
+  // the position (0,0) is on top-left corner -> up movement is this.y - this.vertical
   handleInput(key) {
     // update the player position: reached top of the grid, stays within the gird, collision status
     audio.src = 'sounds/step.wav';
     switch(key) {
       case 'left':
-          if (this.x > 0) {
-            this.x -= this.horizontal;
-            audio.play();
-          }
-          break;
+        if (this.x > 0) {
+          this.x -= this.horizontal;
+          audio.play();
+        }
+        break;
       case 'up':
-          if (this.y > this.vertical) {
-            this.y -= this.vertical;
-            audio.play();
-          }
-          break;
+        if (this.y > this.vertical) {
+          this.y -= this.vertical;
+          audio.play();
+        }
+        break;
       case 'right':
-          if (this.x < (this.horizontal * 4)) {
-            this.x += this.horizontal;
-            audio.play();
-          }
-          break;
+        if (this.x < (this.horizontal * 4)) {
+          this.x += this.horizontal;
+          audio.play();
+        }
+        break;
       case 'down':
-          if (this.y < this.vertical * 4) {
-            this.y  += this.vertical;
-            audio.play();
-          }
-          break;
+        if (this.y < this.vertical * 4) {
+          this.y  += this.vertical;
+          audio.play();
+        }
+        break;
     }
   }
 
