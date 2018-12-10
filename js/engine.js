@@ -121,14 +121,6 @@ var Engine = (function(global) {
         } else {
           id = win.requestAnimationFrame(main);
         }
-
-        // allGems && allGems.forEach(function(gem) {
-        //   if(gem.bonus === true){
-        //     win.cancelAnimationFrame(id);
-        //   }
-        // });
-
-
     }
 
     /* This function does some initial setup that should only occur once,
@@ -169,8 +161,11 @@ var Engine = (function(global) {
         });
         player.update();
 
-        allGems && allGems.forEach(function(gem) {
-          gem.update();
+        allGems && allGems.forEach(function(gem, index) {
+          let result = gem.update();
+          if(result){
+            allGems.splice(index,1);
+          }
         });
     }
 

@@ -6,12 +6,12 @@ let audio = new Audio,
 
 // Upon page load open the welcome modal
 window.onload = function() {
-  // window.location.href = "#welcome-modal";
+  window.location.href = "#welcome-modal";
   generateAvatars();
   generateHearts();
 }
 
-// create avatars
+// generate avatars
 const avatarsId = ['char-princess-girl','char-cat-girl','char-horn-girl','char-pink-girl','char-boy'];
 
 let generateAvatars = () => {
@@ -19,12 +19,23 @@ let generateAvatars = () => {
     avatarsContainer = document.getElementById('avatars');
     let avatar = document.createElement('img');
     avatarsContainer.appendChild(avatar);
-    avatar.src=`images/${element}.png`
-    avatar.id=`${element}`
+    avatar.src=`images/${element}.png`;
+    avatar.id=`${element}`;
+    avatar.classList.add('char-image');
+    // add animation when hovering on an avatar
+    avatar.addEventListener('mouseover', function(e) {
+      avatar.classList.add('bounceIn');
+      avatar.classList.add('active')
+    });
+    // remove aniamtion when leaving an avatar
+    avatar.addEventListener('mouseout', function(e) {
+      avatar.classList.remove('bounceIn');
+      avatar.classList.remove('active')
+    });
   }
 };
 
-// create hearts
+// generate hearts
 let generateHearts = () => {
   for (let i = 0; i < lives ; i++) {
     let life = document.createElement('li');
@@ -40,7 +51,7 @@ const cushionGems = ['images/Gem Orange.png', 'images/Gem Green.png','images/Gem
 
 // Gem class
 class Gem {
-  constructor() {
+  constructor(id) {
     this.sprite = this.randomGem(cushionGems);
     this.x = this.gemXCoordinate();
     this.y = this.gemYCoordinate();
@@ -48,17 +59,14 @@ class Gem {
     this.vertical = 83;
     this.width = this.horizontal/2;
     this.height = this.vertical/2;
-    // this.delayGemRender = undefined;
+    this.id = id;
+    this.point = this.gemPoints(this.sprite);
   }
 
   // Draw the gem on the screen
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
-
-  // remove() {
-  //   ctx.clearRect(this.x,this.y, (this.x + this.width) , (this.y + this.height));
-  // }
 
   // random gem
   randomGem(arr) {
@@ -122,13 +130,13 @@ class Gem {
     const gemPoint = {
       'images/Gem Orange.png': 10,
       'images/Gem Green.png' : 20,
-      'images/Gem Blue.png' : 30
+      'images/Gem Blue.png' : 30,
     };
     return gemPoint[gem];
   }
 
   // whether the player and the gem are colliding
-  reachedGem() {
+  playerCollidWithGem() {
     // position of the player in a grid
     let playerCoordinates = {
       x: player.x,
@@ -151,49 +159,34 @@ class Gem {
     playerCoordinates.height + playerCoordinates.y > gemCoordinates.y;
 
     if ( collisonXRange && collisionYRange ) {
-        this.bonus = true;
-        let gem = this.sprite;
-        // get the gem upon collision
-
-        console.log("what is my audio", audio.src);
-        this.getGem(gem);
-
-      }
+      let gem = this.sprite;
+      // get the gem upon collision
+      this.addGemPoints(gem);
+      return true
+    } else {
+      return false
     }
+  }
 
   // add  points when player reached a gem
-  getGem(gem) {
+  addGemPoints() {
     audio.src = 'sounds/bonus.wav';
     audio.play();
-    let newPoint = this.gemPoints(gem)
     let point = document.querySelector('.result');
-    points += this.gemPoints(gem);
+    points += this.point;
     point.innerHTML = `${points}`
-    // allGems = allGems.filter(item => item !== gem)
-    // this.delay();
   }
 
   update() {
-    this.reachedGem();
+    return this.playerCollidWithGem();
   }
-
-  // delay() {
-  //   this.delayGemRender = setTimeout(function() {
-  //     this.resetGem();
-  //   }, 5000);
-  // }
-  //
-  // resetGem() {
-  //   this.x = this.gemXCoordinate();
-  //   this.y = this.gemYCoordinate();
-  // }
 }
 
-const gem1 = new Gem();
-const gem2 = new Gem();
-const gem3 = new Gem();
+const gem1 = new Gem(1);
+const gem2 = new Gem(2);
+const gem3 = new Gem(3);
 
-const allGems = [];
+let allGems = [];
 allGems.push( gem1, gem2, gem3);
 
 // Enemies our player must avoid
@@ -259,7 +252,6 @@ class Player {
     this.x = this.x0;
     this.y = this.y0;
     this.winner = false;
-    this.bonus = false;
   }
   // Draw the player on the screen
   render() {
@@ -319,16 +311,17 @@ class Player {
       }
       // win
       if(this.y === 58) {
-        console.log("log the points", points);
-        if (points <= 150) {
-          console.log("will it hit here");
-          audio.src = 'sounds/win.wav';
-          audio.play();
-        } else {
-          audio.src = 'sounds/win_round.wav';
-          audio.play();
-          this.winner = true;
-        }
+        audio.src = 'sounds/win_round.wav';
+        audio.play();
+        this.winner = true;
+        allGems = [];
+        //  after winning create new random gems
+        let gemIndex = Math.floor(Math.random()*10);
+        let myGem1 = new Gem(gemIndex);
+        let myGem2 = new Gem(`gem${gemIndex + 1}`);
+        setTimeout(function(){
+          allGems.push( myGem1, myGem2 );
+        }, 1500);
       }
     }
     if(this.y === 58) {
@@ -364,19 +357,15 @@ class Player {
 // Now instantiate your objects.
 
 // Place all enemy objects in an array called allEnemies
-// const enemy1 = new Enemy(-101,0, 200);
-// const enemy2 = new Enemy(-101,83, 300);
-const enemy1 = new Enemy(-101,83, 100);
-// const enemy3 = new Enemy(-101*3, 83, 300);
-// const enemy4 = new Enemy(-101*2, 83*2, 200);
-// const enemy5 = new Enemy(-101*5, 83*2, 400);
+const enemy1 = new Enemy(-101,0, 200);
+const enemy2 = new Enemy(-101,83, 300);
+const enemy3 = new Enemy(-101*2, 83*2, 200);
 const allEnemies = [];
-
 // enemies will start moving upon clicking the start button
 const startBtn = document.getElementById('start-btn');
 startBtn.addEventListener('click', function() {
   $('#start-btn').attr('disabled',true);
-  allEnemies.push( enemy1);
+  allEnemies.push( enemy1, enemy2, enemy3);
 })
 
 // Place the player object in a variable called player
@@ -397,25 +386,12 @@ startBtn.addEventListener('click', function() {
   });
 })
 
-
 // select player
 const avatars = document.getElementById('avatars');
+console.log("what are avatars", avatars);
 avatars.addEventListener('click', function(e) {
   player.handleClick(e);
 });
-// add animation when hovering on an avatar
-const avatar = document.querySelectorAll('.avatar');
-for (let i = 0; i< avatar.length; i++) {
-  avatar[i].addEventListener('mouseover', function(e) {
-    avatar[i].classList.add('bounceIn')
-  });
-}
-// remove aniamtion when leaving an avatar
-for (let i = 0; i< avatar.length; i++) {
-  avatar[i].addEventListener('mouseout', function(e) {
-    avatar[i].classList.remove('bounceIn')
-  });
-}
 
 //  close welcome modal
 const startGame = document.querySelector('.start');
