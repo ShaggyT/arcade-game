@@ -42,8 +42,8 @@ Once the player collides with an enemy, the game is reset and the player moves b
 
   1. Download or clone the repository
   ```
-    - git clone git@github.com:ShaggyT/arcade_game.git
-    - cd arcade_game
+    - git clone git@github.com:ShaggyT/arcade-game.git
+    - cd arcade-game
   ```
   2. Open the folder and right click on ```index.html``` and choose a browser
 
